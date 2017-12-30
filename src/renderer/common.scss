@@ -1,1 +1,17 @@
 @import "~bulma";
+
+.sideMenu {
+  -webkit-app-region: drag;
+  height: 100vh;
+  border-right: 1px solid #CCC;
+  padding-top: 22px; // height of window controls
+
+  &_search {
+    input {
+      border: solid #CCC 0px;
+      border-width: 1px 0px 1px 0px;
+      border-radius: 0px;
+      box-shadow: none;
+    }
+  }
+}

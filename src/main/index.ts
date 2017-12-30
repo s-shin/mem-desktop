@@ -9,7 +9,12 @@ const setupMainWindow = () => {
     return;
   }
 
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    titleBarStyle: "hidden",
+  });
+
   const win = mainWindow!;
 
   win.loadURL(

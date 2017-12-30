@@ -1,5 +1,6 @@
 import { h, app } from "hyperapp";
 import "./common.scss";
+import "./vendor/fontawesome-all"
 
 interface State {
   count: number;
@@ -20,11 +21,26 @@ const actions: Actions = {
 };
 
 const view = (state: State, actions: Actions) => (
-  <div>
-    <p>count: {state.count}</p>
-    <button onclick={actions.up}>Up</button>
-    <button onclick={actions.down}>Down</button>
+  <div class="columns is-marginless">
+    <div class="column is-one-quarter is-paddingless">
+      <div class="container sideMenu">
+        <div class="field sideMenu_search">
+          <div class="control has-icons-left">
+            <input type="text" class="input" />
+            <span class="icon is-small is-left">
+              <i class="fas fa-search" />
+            </span>
+          </div>
+        </div>
+        <p>left</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="container">
+        <p>right</p>
+      </div>
+    </div>
   </div>
 );
 
-export const main = app(state, actions, view, document.getElementById("app")!);
+export const main = app(state, actions, view, document.body);
