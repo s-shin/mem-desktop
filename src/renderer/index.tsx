@@ -21,24 +21,26 @@ const actions: Actions = {
 };
 
 const view = (state: State, actions: Actions) => (
-  <div class="columns is-marginless">
-    <div class="column is-one-quarter is-paddingless">
-      <div class="container sideMenu">
-        <div class="field sideMenu_search">
-          <div class="control has-icons-left">
-            <input type="text" class="input" />
-            <span class="icon is-small is-left">
-              <i class="fas fa-search" />
-            </span>
-          </div>
+  <div class="app">
+    <div class="app_sideMenu">
+      <div class="app_sideMenu_section">
+        <div class="app_sideMenu_section_header">
+          <h2>Notes</h2>
         </div>
-        <p>left</p>
+        <div class="app_sideMenu_section_body">
+          <ul>
+            {[...Array(20).keys()].map(() => (
+              <li>
+                <h3>Hello</h3>
+                <p>World!</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
-    <div class="column">
-      <div class="container">
-        <p>right</p>
-      </div>
+    <div class="app_main">
+      <textarea />
     </div>
   </div>
 );
