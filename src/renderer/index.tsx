@@ -1,4 +1,5 @@
 import { h, app } from "hyperapp";
+import "./common.scss";
 
 interface State {
   count: number;
