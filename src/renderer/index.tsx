@@ -25,13 +25,21 @@ const view = (state: State, actions: Actions) => (
     <div class="app_sideMenu">
       <div class="app_sideMenu_section">
         <div class="app_sideMenu_section_header">
-          <h2>Notes</h2>
+          <h2>
+            <i class="far fa-file-alt" /> Notes
+            <span class="app_sideMenu_section_header_button" style={{float: "right"}}>
+              <i class="fas fa-plus" />
+            </span>
+            <span class="app_sideMenu_section_header_button">
+              <i class="fas fa-caret-down" />
+            </span>
+          </h2>
         </div>
         <div class="app_sideMenu_section_body">
           <ul>
-            {[...Array(20).keys()].map(() => (
-              <li>
-                <h3>Hello</h3>
+            {[...Array(5).keys()].map((i) => (
+              <li class={i == 2 ? "is-active" : ""}>
+                <h3>Hello {i}</h3>
                 <p>World!</p>
               </li>
             ))}
