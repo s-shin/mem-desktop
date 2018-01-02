@@ -1,44 +1,58 @@
 import React from "react";
-import { OrderedMap } from "immutable";
+import { connect } from "react-redux";
+import { Map } from "immutable";
 import { NoteSideMenu } from "../components/NoteSideMenu";
 import { NoteEditor } from "../components/NoteEditor";
 import { Note } from "../../common/entities/Note";
+import { AppState } from "../AppState";
+import { updateNote } from "../actions/note";
 
-interface State {
-  notes: OrderedMap<number, Note>;
-  activeNoteId: number;
+interface StateProps {
+  notes: Map<number, Note>;
 }
 
-export class Home extends React.Component<any, State> {
-  constructor(props: any) {
+interface DispatchProps {
+  updateNote: typeof updateNote;
+}
+
+interface Props extends StateProps, DispatchProps {}
+
+interface State {
+  activeNote?: Note;
+}
+
+class Component extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
-      notes: OrderedMap<number, Note>(
-        Array(10).fill(0).map(
-          (_0, i) => [
-            i + 1,
-            new Note({ id: i + 1, text: `foo${i + 1}\nbar\nfoobar` }),
-          ] as [number, Note],
-        ),
-      ),
-      activeNoteId: 1,
+      activeNote: props.notes.first(),
     };
   }
 
+  componentWillReceiveProps(props: Props) {
+    const { activeNote } = this.state;
+    this.setState({
+      activeNote: activeNote !== undefined
+        ? props.notes.get(activeNote.id)
+        : props.notes.first(),
+    });
+  }
+
   render() {
+    const { activeNote } = this.state;
     return (
       <div className="home">
         <div className="home_sideMenu">
           <NoteSideMenu
-            notes={this.state.notes}
-            activeNoteId={this.state.activeNoteId}
+            notes={this.props.notes}
+            activeNoteId={activeNote ? activeNote.id : 0}
             onSelectNote={id => this.changeActiveNoteId(id)}
             />
         </div>
         <div className="home_main">
           <NoteEditor
-            note={this.state.notes.get(this.state.activeNoteId)!}
+            note={activeNote}
             onChangeNote={note => this.updateNote(note)}
             />
         </div>
@@ -48,13 +62,20 @@ export class Home extends React.Component<any, State> {
 
   changeActiveNoteId(id: number) {
     this.setState({
-      activeNoteId: id,
+      activeNote: this.props.notes.get(id),
     });
   }
 
   updateNote(note: Note) {
-    this.setState({
-      notes: this.state.notes.set(note.id, note),
-    });
+    this.setState({ activeNote: note });
+    // TODO: lock editor then save
+    // this.props.updateNote(note);
   }
 }
+
+export const Home = connect<StateProps, DispatchProps, {}, AppState>(
+  state => ({
+    notes: state.notes.notes,
+  }),
+  { updateNote },
+)(Component);

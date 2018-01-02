@@ -7,6 +7,7 @@ import { Route } from "react-router";
 import createHistory from "history/createBrowserHistory";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { ConnectedRouter, routerReducer, routerMiddleware } from "react-router-redux";
+import { notes } from "./reducers/notes";
 import { Home } from "./containers/Home";
 
 const history = createHistory();
@@ -15,6 +16,7 @@ const middleware = routerMiddleware(history);
 
 const store = createStore(
   combineReducers({
+    notes,
     router: routerReducer,
   }),
   applyMiddleware(middleware),

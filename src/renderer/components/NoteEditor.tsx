@@ -2,19 +2,21 @@ import React from "react";
 import { Note } from "../../common/entities/Note";
 
 interface Props {
-  note: Note;
+  note?: Note;
   onChangeNote(note: Note): void;
 }
 
-export class NoteEditor extends React.Component<Props> {
-  render() {
-    return (
-      <div className="noteEditor">
-        <textarea
-          value={this.props.note.text}
-          onChange={e => this.props.onChangeNote(this.props.note.set("text", e.target.value))}
+export const NoteEditor: React.SFC<Props> = props => {
+  const { note, onChangeNote } = props;
+  return (
+    <div className="noteEditor">
+      {note
+        ? <textarea
+          value={note.text}
+          placeholder="title\n\ncontent..."
+          onChange={e => onChangeNote(note.set("text", e.target.value))}
           ></textarea>
-      </div>
-    );
-  }
-}
+        : <p>TODO</p>}
+    </div>
+  );
+};

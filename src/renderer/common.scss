@@ -102,6 +102,11 @@ body {
           padding: 0px 0px 0.5rem 0px;
           color: $fgColor2a;
           font-size: 0.85em;
+        }
+
+        &:after {
+          display: block;
+          content: "";
           border-bottom: 1px solid #666;
         }
       }

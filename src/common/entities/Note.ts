@@ -1,11 +1,8 @@
 import { Record } from "immutable";
 
-interface Props {
-  id: number;
-  text: string;
-}
+export type NoteId = number;
 
-const DEFAULT_PROPS: Props = {
+const DEFAULT_PROPS = {
   id: 0,
   text: "",
 };
