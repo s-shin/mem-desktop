@@ -6,18 +6,31 @@
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
-    "dist": "npm run compile && electron-builder",
-    "dist:dir": "npm run dist --dir -c.compression=store -c.mac.identity=null"
+    "dist": "electron-webpack && electron-builder",
+    "dist:dir": "electron-webpack && electron-builder --dir -c.compression=store -c.mac.identity=null"
   },
   "author": "Shintaro Seki <s2pch.luck@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "bulma": "^0.6.1",
-    "hyperapp": "^1.0.0",
+    "@types/history": "^4.6.2",
+    "history": "^4.7.2",
+    "immutable": "^4.0.0-rc.9",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.16.0",
     "sanitize.css": "^5.0.0",
     "source-map-support": "^0.5.0"
   },
   "devDependencies": {
+    "@types/react": "^16.0.31",
+    "@types/react-dom": "^16.0.3",
+    "@types/react-redux": "^5.0.14",
+    "@types/react-router": "^4.0.20",
+    "@types/react-router-redux": "^5.0.11",
     "electron": "^1.7.10",
     "electron-builder": "^19.49.2",
     "electron-webpack": "^1.11.0",

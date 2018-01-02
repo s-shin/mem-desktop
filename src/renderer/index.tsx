@@ -1,56 +1,32 @@
-import { h, app } from "hyperapp";
 import "./common.scss";
-import "./vendor/fontawesome-all"
+import "./vendor/fontawesome-all";
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { Route } from "react-router";
+import createHistory from "history/createBrowserHistory";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { ConnectedRouter, routerReducer, routerMiddleware } from "react-router-redux";
+import { Home } from "./containers/Home";
 
-interface State {
-  count: number;
-}
+const history = createHistory();
 
-interface Actions {
-  up(): (state: State) => State;
-  down(): (state: State) => State;
-}
+const middleware = routerMiddleware(history);
 
-const state: State = {
-  count: 0,
-};
-
-const actions: Actions = {
-  up: () => (state: State) => ({ count: state.count + 1 }),
-  down: () => (state: State) => ({ count: state.count - 1 }),
-};
-
-const view = (state: State, actions: Actions) => (
-  <div class="app">
-    <div class="app_sideMenu">
-      <div class="app_sideMenu_section">
-        <div class="app_sideMenu_section_header">
-          <h2>
-            <i class="far fa-file-alt" /> Notes
-            <span class="app_sideMenu_section_header_button" style={{float: "right"}}>
-              <i class="fas fa-plus" />
-            </span>
-            <span class="app_sideMenu_section_header_button">
-              <i class="fas fa-caret-down" />
-            </span>
-          </h2>
-        </div>
-        <div class="app_sideMenu_section_body">
-          <ul>
-            {[...Array(5).keys()].map((i) => (
-              <li class={i == 2 ? "is-active" : ""}>
-                <h3>Hello {i}</h3>
-                <p>World!</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="app_main">
-      <textarea />
-    </div>
-  </div>
+const store = createStore(
+  combineReducers({
+    router: routerReducer,
+  }),
+  applyMiddleware(middleware),
 );
 
-export const main = app(state, actions, view, document.body);
+ReactDOM.render(
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <div>
+        <Route exact path="/" component={Home} />
+      </div>
+    </ConnectedRouter>
+  </Provider>,
+  document.getElementById("app")!,
+);
