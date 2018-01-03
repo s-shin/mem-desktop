@@ -1,21 +1,24 @@
 import React from "react";
+import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { Map } from "immutable";
 import { NoteSideMenu } from "../components/NoteSideMenu";
 import { NoteEditor } from "../components/NoteEditor";
 import { Note } from "../../common/entities/Note";
-import { AppState } from "../AppState";
-import { updateNote } from "../actions/note";
+import { RootState } from "../reducers/index";
+import { saveNote } from "../actions/note";
 
 interface StateProps {
   notes: Map<number, Note>;
 }
 
 interface DispatchProps {
-  updateNote: typeof updateNote;
+  saveNote: typeof saveNote;
 }
 
-interface Props extends StateProps, DispatchProps {}
+interface Props extends StateProps, DispatchProps {
+  dispatch: Dispatch;
+}
 
 interface State {
   activeNote?: Note;
@@ -28,15 +31,6 @@ class Component extends React.Component<Props, State> {
     this.state = {
       activeNote: props.notes.first(),
     };
-  }
-
-  componentWillReceiveProps(props: Props) {
-    const { activeNote } = this.state;
-    this.setState({
-      activeNote: activeNote !== undefined
-        ? props.notes.get(activeNote.id)
-        : props.notes.first(),
-    });
   }
 
   render() {
@@ -68,14 +62,13 @@ class Component extends React.Component<Props, State> {
 
   updateNote(note: Note) {
     this.setState({ activeNote: note });
-    // TODO: lock editor then save
-    // this.props.updateNote(note);
+    this.props.saveNote(note);
   }
 }
 
-export const Home = connect<StateProps, DispatchProps, {}, AppState>(
+export const Home = connect<StateProps, DispatchProps, {}, RootState>(
   state => ({
     notes: state.notes.notes,
   }),
-  { updateNote },
+  { saveNote },
 )(Component);

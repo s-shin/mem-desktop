@@ -1,24 +1,27 @@
 import { ActionTypes } from "../constants/ActionTypes";
-import { NoteId, Note } from "../../common/entities/Note";
+import { Note } from "../../common/entities/Note";
+import { Dispatch, ActionCreator } from "redux";
+import { RootState } from "../reducers/index";
 
-export interface AddNoteAction {
-  type: ActionTypes.ADD_NOTE;
+export interface SaveNoteStartAction {
+  type: ActionTypes.SAVE_NOTE_START;
+}
+
+export interface SaveNoteDoneAction {
+  type: ActionTypes.SAVE_NOTE_DONE;
   note: Note;
 }
 
-export interface DeleteNoteAction {
-  type: ActionTypes.DELETE_NOTE;
-  noteId: NoteId;
+export interface SaveNoteErrorAction {
+  type: ActionTypes.SAVE_NOTE_ERROR;
 }
 
-export interface UpdateNoteAction {
-  type: ActionTypes.UPDATE_NOTE;
-  note: Note;
-}
+export type SaveNoteActions = SaveNoteStartAction | SaveNoteDoneAction | SaveNoteErrorAction;
 
-export function updateNote(note: Note): UpdateNoteAction {
-  return {
-    type: ActionTypes.UPDATE_NOTE,
-    note,
-  };
-}
+export const saveNote: ActionCreator<any> =
+    (note: Note) =>
+    async (dispatch: Dispatch<SaveNoteActions>, getState: () => RootState) => {
+  dispatch({ type: ActionTypes.SAVE_NOTE_START });
+  await new Promise(resolve => { setTimeout(() => resolve(), 1000); });
+  dispatch({ type: ActionTypes.SAVE_NOTE_DONE, note });
+};
