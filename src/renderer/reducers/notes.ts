@@ -22,7 +22,9 @@ export const notes = (state = new NotesState(), action: SaveNoteActions) => {
       return state.set("isSaving", true);
     }
     case ActionTypes.SAVE_NOTE_DONE: {
-      return state.set("isSaving", false);
+      return state.withMutations(mut => mut
+        .set("isSaving", false)
+        .update("notes", x => x.set(action.note.id, action.note)));
     }
     case ActionTypes.SAVE_NOTE_ERROR: {
       return state.set("isSaving", false);

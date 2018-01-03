@@ -7,6 +7,6 @@ export interface RootState {
 }
 
 export const rootReducer = combineReducers({
-  notes: notes as Reducer,
-  routerReducer: routerReducer as Reducer,
+  notes: notes as Reducer<any>,
+  routerReducer: routerReducer as Reducer<any>,
 });

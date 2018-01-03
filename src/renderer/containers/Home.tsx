@@ -17,7 +17,7 @@ interface DispatchProps {
 }
 
 interface Props extends StateProps, DispatchProps {
-  dispatch: Dispatch;
+  dispatch: Dispatch<any>;
 }
 
 interface State {
