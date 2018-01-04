@@ -10,6 +10,7 @@ import { saveNote } from "../actions/note";
 
 interface StateProps {
   notes: Map<number, Note>;
+  isSaving: boolean;
 }
 
 interface DispatchProps {
@@ -48,6 +49,7 @@ class Component extends React.Component<Props, State> {
           <NoteEditor
             note={activeNote}
             onChangeNote={note => this.updateNote(note)}
+            isSaving={this.props.isSaving}
             />
         </div>
       </div>
@@ -69,6 +71,7 @@ class Component extends React.Component<Props, State> {
 export const Home = connect<StateProps, DispatchProps, {}, RootState>(
   state => ({
     notes: state.notes.notes,
+    isSaving: state.notes.isSaving,
   }),
   { saveNote },
 )(Component);

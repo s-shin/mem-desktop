@@ -10,6 +10,7 @@ import { ConnectedRouter, routerMiddleware } from "react-router-redux";
 import thunk from "redux-thunk";
 import { rootReducer } from "./reducers/index";
 import { Home } from "./containers/Home";
+import "./sandbox";
 
 const history = createHistory();
 
