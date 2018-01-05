@@ -2,7 +2,7 @@ import { app, BrowserWindow } from "electron";
 
 let mainWindow: Electron.BrowserWindow | null;
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 const setupMainWindow = () => {
   if (mainWindow != null) {
@@ -20,7 +20,7 @@ const setupMainWindow = () => {
   win.loadURL(
     isDevelopment
       ? `http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`
-      : `file://${__dirname}/index.html`
+      : `file://${__dirname}/index.html`,
   );
 
   if (isDevelopment) {
@@ -31,11 +31,11 @@ const setupMainWindow = () => {
     mainWindow = null;
   });
 
-  win.webContents.on('devtools-opened', () => {
-    win.focus()
+  win.webContents.on("devtools-opened", () => {
+    win.focus();
     setImmediate(() => {
-      win.focus()
-    })
+      win.focus();
+    });
   });
 };
 

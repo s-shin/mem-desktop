@@ -7,7 +7,8 @@
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
     "dist": "electron-webpack && electron-builder",
-    "dist:dir": "electron-webpack && electron-builder --dir -c.compression=store -c.mac.identity=null"
+    "dist:dir": "electron-webpack && electron-builder --dir -c.compression=store -c.mac.identity=null",
+    "lint": "tslint src/**/*.ts"
   },
   "author": "Shintaro Seki <s2pch.luck@gmail.com>",
   "license": "ISC",
