@@ -11,7 +11,7 @@
     "lint": "tslint src/**/*.ts"
   },
   "author": "Shintaro Seki <s2pch.luck@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "electron": "^1.7.10",
     "history": "^4.7.2",
