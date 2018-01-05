@@ -6,7 +6,7 @@ import { NoteSideMenu } from "../components/NoteSideMenu";
 import { NoteEditor } from "../components/NoteEditor";
 import { Note } from "../../common/entities/Note";
 import { RootState } from "../reducers/index";
-import { saveNote } from "../actions/note";
+import { saveNote, loadNotes } from "../actions/note";
 
 interface StateProps {
   notes: Map<number, Note>;
@@ -15,6 +15,7 @@ interface StateProps {
 
 interface DispatchProps {
   saveNote: typeof saveNote;
+  loadNotes: typeof loadNotes;
 }
 
 interface Props extends StateProps, DispatchProps {
@@ -32,6 +33,10 @@ class Component extends React.Component<Props, State> {
     this.state = {
       activeNote: props.notes.first(),
     };
+  }
+
+  componentWillMount() {
+    this.props.loadNotes();
   }
 
   render() {
@@ -64,6 +69,7 @@ class Component extends React.Component<Props, State> {
 
   updateNote(note: Note) {
     this.setState({ activeNote: note });
+    // throttling
     this.props.saveNote(note);
   }
 }
@@ -73,5 +79,5 @@ export const Home = connect<StateProps, DispatchProps, {}, RootState>(
     notes: state.notes.notes,
     isSaving: state.notes.isSaving,
   }),
-  { saveNote },
+  { saveNote, loadNotes },
 )(Component);

@@ -17,3 +17,11 @@ export function promisify(fn: (...args: any[]) => void) {
     });
   };
 }
+
+export async function handleError<Result>(p: Promise<Result>): Promise<[Result | undefined, any | undefined]> {
+  try {
+    return [await p, undefined];
+  } catch (e) {
+    return [undefined, e];
+  }
+}

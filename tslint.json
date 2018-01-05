@@ -8,6 +8,7 @@
     "member-access": [true, "no-public"],
     "arrow-parens": [true, "ban-single-arg-parens"],
     "object-literal-sort-keys": false,
-    "max-line-length": false
+    "max-line-length": false,
+    "comment-format": [true, { "ignore-words": ["---"] }]
   }
 }
