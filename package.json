@@ -13,11 +13,13 @@
   "author": "Shintaro Seki <s2pch.luck@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "codemirror": "^5.33.0",
     "electron": "^1.7.10",
     "history": "^4.7.2",
     "immutable": "^4.0.0-rc.9",
     "mkdirp": "^0.5.1",
     "react": "^16.2.0",
+    "react-codemirror2": "^3.0.7",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
@@ -28,6 +30,7 @@
     "source-map-support": "^0.5.0"
   },
   "devDependencies": {
+    "@types/codemirror": "^0.0.55",
     "@types/history": "^4.6.2",
     "@types/mkdirp": "^0.5.2",
     "@types/react": "^16.0.31",

@@ -1,5 +1,6 @@
 import React from "react";
 import { Note } from "../../common/entities/Note";
+import { Controlled } from "./react-codemirror2";
 
 interface Props {
   note?: Note;
@@ -14,11 +15,18 @@ export const NoteEditor: React.SFC<Props> = props => {
     <div className="noteEditor">
       {note !== undefined
         ? <div>
-            <textarea
+            <Controlled
               value={note.text}
-              placeholder="title\n\ncontent..."
-              onChange={e => onChangeNote(note.set("text", e.target.value))}
-              ></textarea>
+              options={{
+                mode: "gfm",
+                theme: "railscasts",
+                lineNumbers: true,
+                keyMap: "vim",
+              }}
+              onBeforeChange={(editor, data, value) => {
+                onChangeNote(note.set("text", value));
+              }}
+              />
             <div className="noteEditor_controls">
               <span>
                 <span style={{display: isSaving ? "inline-block" : "none"}}>
