@@ -1,0 +1,8 @@
+{
+  "name": "mem-desktop-fontawesome",
+  "version": "5.0.2",
+  "description": "",
+  "main": "fontawesome-all.js",
+  "license": "MIT",
+  "private": true
+}

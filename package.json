@@ -17,6 +17,7 @@
     "electron": "^1.7.10",
     "history": "^4.7.2",
     "immutable": "^4.0.0-rc.9",
+    "mem-desktop-fontawesome": "file:packages/mem-desktop-fontawesome",
     "mkdirp": "^0.5.1",
     "react": "^16.2.0",
     "react-codemirror2": "^3.0.7",
@@ -46,5 +47,10 @@
     "tslint": "^5.8.0",
     "typescript": "^2.6.2",
     "webpack": "^3.10.0"
+  },
+  "electronWebpack": {
+    "renderer": {
+      "webpackConfig": "webpack.renderer.additions.js"
+    }
   }
 }

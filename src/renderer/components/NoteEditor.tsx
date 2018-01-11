@@ -1,6 +1,6 @@
 import React from "react";
 import { Note } from "../../common/entities/Note";
-import { Controlled } from "./react-codemirror2";
+import { Controlled } from "react-codemirror2";
 
 interface Props {
   note?: Note;
