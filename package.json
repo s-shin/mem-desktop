@@ -13,10 +13,12 @@
   "author": "Shintaro Seki <s2pch.luck@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "classnames": "^2.2.5",
     "codemirror": "^5.33.0",
     "electron": "^1.7.10",
     "history": "^4.7.2",
     "immutable": "^4.0.0-rc.9",
+    "lodash": "^4.17.4",
     "mem-desktop-fontawesome": "file:packages/mem-desktop-fontawesome",
     "mkdirp": "^0.5.1",
     "react": "^16.2.0",
@@ -31,8 +33,10 @@
     "source-map-support": "^0.5.0"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.3",
     "@types/codemirror": "^0.0.55",
     "@types/history": "^4.6.2",
+    "@types/lodash": "^4.14.92",
     "@types/mkdirp": "^0.5.2",
     "@types/react": "^16.0.31",
     "@types/react-dom": "^16.0.3",

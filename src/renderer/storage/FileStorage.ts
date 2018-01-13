@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import mkdirp from "mkdirp";
-import { promisify } from "../../common/util";
+import { promisify } from "../../common/util/promise";
 import { remote } from "electron";
 
 import { Note, NoteId } from "../../common/entities/Note";

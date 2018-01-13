@@ -4,7 +4,6 @@ import "mem-desktop-fontawesome";
 
 import "codemirror/mode/gfm/gfm";
 import "codemirror/mode/javascript/javascript";
-import "codemirror/keymap/vim";
 
 import "./sandbox";
 import React from "react";

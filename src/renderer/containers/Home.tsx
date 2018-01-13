@@ -1,12 +1,13 @@
 import React from "react";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { Map } from "immutable";
+import { is, Map } from "immutable";
 import { NoteSideMenu } from "../components/NoteSideMenu";
 import { NoteEditor } from "../components/NoteEditor";
 import { Note } from "../../common/entities/Note";
 import { RootState } from "../reducers/index";
 import { saveNote, loadNotes } from "../actions/note";
+const throttle = require("lodash/throttle"); // tslint:disable-line
 
 interface StateProps {
   notes: Map<number, Note>;
@@ -24,19 +25,38 @@ interface Props extends StateProps, DispatchProps {
 
 interface State {
   activeNote?: Note;
+  isEditing: boolean;
 }
 
 class Component extends React.Component<Props, State> {
+  private saveActiveNoteWithThrottle: any;
+
   constructor(props: Props) {
     super(props);
 
+    this.saveActiveNoteWithThrottle = throttle(() => {
+      if (this.state.activeNote !== undefined) {
+        this.props.saveNote(this.state.activeNote);
+      }
+    }, 2000, { leading: false });
+
     this.state = {
       activeNote: props.notes.first(),
+      isEditing: false,
     };
   }
 
   componentWillMount() {
     this.props.loadNotes();
+  }
+
+  componentWillReceiveProps(newProps: Props) {
+    const { activeNote } = this.state;
+    if (activeNote !== undefined) {
+      this.setState({
+        isEditing: !is(activeNote, newProps.notes.get(activeNote.id)),
+      });
+    }
   }
 
   render() {
@@ -55,6 +75,7 @@ class Component extends React.Component<Props, State> {
             note={activeNote}
             onChangeNote={note => this.updateNote(note)}
             isSaving={this.props.isSaving}
+            isEditing={this.state.isEditing}
             />
         </div>
       </div>
@@ -62,15 +83,16 @@ class Component extends React.Component<Props, State> {
   }
 
   changeActiveNoteId(id: number) {
+    this.saveActiveNoteWithThrottle.flush();
     this.setState({
       activeNote: this.props.notes.get(id),
+      isEditing: false,
     });
   }
 
   updateNote(note: Note) {
-    this.setState({ activeNote: note });
-    // throttling
-    this.props.saveNote(note);
+    this.setState({ activeNote: note, isEditing: true });
+    this.saveActiveNoteWithThrottle();
   }
 }
 

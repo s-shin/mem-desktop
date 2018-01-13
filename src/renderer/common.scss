@@ -39,6 +39,7 @@ body {
 }
 
 .noteSideMenu {
+  user-select: none;
   display: flex;
   height: 100%;
   overflow: auto;
@@ -70,11 +71,11 @@ body {
   }
 
   &_body {
-    -webkit-app-region: no-drag;
     flex-grow: 1;
     overflow: auto;
 
     > ul {
+      -webkit-app-region: no-drag;
       margin: 0px;
       padding: 0px;
 
@@ -119,6 +120,7 @@ body {
 }
 
 .noteEditor {
+  -webkit-app-region: no-drag;
   position: relative;
   width: 100%;
   height: 100%;
@@ -128,7 +130,8 @@ body {
   }
 
   .react-codemirror2 {
-    -webkit-app-region: no-drag;
+    position: relative;
+    z-index: 0;
     height: 100%;
 
     > .CodeMirror {
@@ -141,8 +144,27 @@ body {
 
   &_controls {
     position: absolute;
+    z-index: 1;
     right: 1rem;
     top: 1rem;
     color: #AAA;
+
+    &_spinner {
+      display: none;
+      &.isSaving {
+        display: inline-block;
+      }
+    }
+
+    &_saveButton {
+      display: inline-block;
+      opacity: 0.3;
+      &.isSaving {
+        display: none;
+      }
+      &.isEditing {
+        opacity: 1;
+      }
+    }
   }
 }
