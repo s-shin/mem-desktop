@@ -7,7 +7,9 @@ import { NoteEditor } from "../components/NoteEditor";
 import { Note } from "../../common/entities/Note";
 import { RootState } from "../reducers/index";
 import { saveNote, loadNotes } from "../actions/note";
-const throttle = require("lodash/throttle"); // tslint:disable-line
+import { Cancelable } from "lodash";
+import throttle from "lodash/throttle";
+import debounce from "lodash/debounce";
 
 interface StateProps {
   notes: Map<number, Note>;
@@ -29,16 +31,27 @@ interface State {
 }
 
 class Component extends React.Component<Props, State> {
-  private saveActiveNoteWithThrottle: any;
+  private saveActiveNoteWithThrottle: (() => void) & Cancelable;
+  private checkEditStateWithDebouncing: (() => void) & Cancelable;
 
   constructor(props: Props) {
     super(props);
 
     this.saveActiveNoteWithThrottle = throttle(() => {
-      if (this.state.activeNote !== undefined) {
-        this.props.saveNote(this.state.activeNote);
+      if (this.isActiveNoteEdited()) {
+        this.props.saveNote(this.state.activeNote!);
       }
     }, 2000, { leading: false });
+
+    this.checkEditStateWithDebouncing = debounce(() => {
+      const isEditing = this.isActiveNoteEdited();
+      if (isEditing) {
+        this.saveActiveNoteWithThrottle();
+      } else if (this.state.isEditing) {
+        this.saveActiveNoteWithThrottle.cancel();
+      }
+      this.setState({ isEditing });
+    }, 100, { leading: false });
 
     this.state = {
       activeNote: props.notes.first(),
@@ -83,6 +96,7 @@ class Component extends React.Component<Props, State> {
   }
 
   changeActiveNoteId(id: number) {
+    this.checkEditStateWithDebouncing.flush();
     this.saveActiveNoteWithThrottle.flush();
     this.setState({
       activeNote: this.props.notes.get(id),
@@ -91,8 +105,13 @@ class Component extends React.Component<Props, State> {
   }
 
   updateNote(note: Note) {
-    this.setState({ activeNote: note, isEditing: true });
-    this.saveActiveNoteWithThrottle();
+    this.setState({ activeNote: note });
+    this.checkEditStateWithDebouncing();
+  }
+
+  isActiveNoteEdited() {
+    const note = this.state.activeNote;
+    return note !== undefined && !is(note, this.props.notes.get(note.id));
   }
 }
 

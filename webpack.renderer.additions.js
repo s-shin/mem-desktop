@@ -1,7 +1,7 @@
 module.exports = {
   "externals": [
-    // NOTE: Why we need this setting?
-    // Because,
+    // NOTE: Why this setting is required for codemirror?
+    // Because:
     // * The codemirror package is appended to [externals](https://webpack.js.org/configuration/externals/)
     //   by electron-webpack (see [the document](https://webpack.electron.build/configuration#white-listing-externals)).
     //     * The codemirror instance got by `import * as codemirror from "codemirror";`
